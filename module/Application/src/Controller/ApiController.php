@@ -17,7 +17,16 @@ class ApiController extends AbstractActionController
     public function __construct()
     {
       $this->auth = $this->getRequest()->getHeaders("Authorization", null);
+      if ($this->auth == null) {
+        //$this->getResponse()->setRedirect('error-authorization');
+      }
     }
+
+    // public function errorAuthorizationAction()
+    // {
+    //   $this->getResponse()->setStatusCode(500);
+    //   return (new UtilResponse)->responseApi(false,"Token não informado!");
+    // }
 
     public function indexAction()
     {
@@ -69,11 +78,9 @@ class ApiController extends AbstractActionController
         }else{
           throw new \Exception("Request is not post.", 1);
         }
-      } catch (\Exception $th) {
+      } catch (\Exception $e) {
         $this->getResponse()->setStatusCode(500);
-        $viewModel->setVariable('success', false);
-        $viewModel->setVariable('error', $th->getMessage());
-        return $viewModel;
+        return (new UtilResponse)->responseApi(false,$e->getMessage());
       }
     }
 

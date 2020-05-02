@@ -77,6 +77,16 @@ return [
                     ],
                 ],
             ],
+            'error-authorization' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/error-authorization',
+                    'defaults' => [
+                        'controller' => Controller\ApiController::class,
+                        'action'     => 'errorAuthorization',
+                    ],
+                ],
+            ],
             /*'application' => [
                 'type'    => Segment::class,
                 'options' => [
