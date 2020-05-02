@@ -12,9 +12,11 @@ use \Util\UtilData as UtilData;
 class ApiController extends AbstractActionController
 {
 
+    private $auth = null;
+
     public function __construct()
     {
-      $auth = $this->getRequest()->getHeaders("Authorization", null);
+      $this->auth = $this->getRequest()->getHeaders("Authorization", null);
     }
 
     public function indexAction()
@@ -35,7 +37,7 @@ class ApiController extends AbstractActionController
           body: data
       });
       */
-      return new JsonModel();
+      return (new UtilResponse)->responseApi(true,$this->auth);
     }
 
     public function addCategoryAction()
@@ -76,22 +78,18 @@ class ApiController extends AbstractActionController
 
     public function listCategoryAction()
     {
-      $viewModel = new JsonModel();
       try {
         $list = (new UtilData())->getData();
-        return new JsonModel(["data" => $list]);
+        return (new UtilResponse)->responseApi(true,$list);
       } catch (\Exception $e) {
         $this->getResponse()->setStatusCode(500);
-        $viewModel->setVariable('success', false);
-        $viewModel->setVariable('error', $th->getMessage());
-        return $viewModel;
+        return (new UtilResponse)->responseApi(false,$e->getMessage());
       }
 
     }
 
     public function listCategoryByIdAction()
     {
-      $viewModel = new JsonModel();
       try {
         $id = $this->params()->fromRoute('id', 0);
         $list = (new UtilData())->getData();
@@ -101,19 +99,16 @@ class ApiController extends AbstractActionController
             $result = $obj;
           }
         }
-        return new JsonModel(["data" => $result]);
+        return (new UtilResponse)->responseApi(true,$result);
       } catch (\Exception $e) {
         $this->getResponse()->setStatusCode(500);
-        $viewModel->setVariable('success', false);
-        $viewModel->setVariable('error', $th->getMessage());
-        return $viewModel;
+        return (new UtilResponse)->responseApi(false,$e->getMessage());
       }
 
     }
 
     public function updateCategoryAction()
     {
-      $viewModel = new JsonModel();
       $utilData = new UtilData();
       try {
         $request = $this->getRequest();
@@ -132,15 +127,13 @@ class ApiController extends AbstractActionController
           }, $list);
 
           $utilData->setData($listFilter);
-          return new JsonModel([$GLOBALS['PATCH_CATEGORY_DATA']]);
+          return (new UtilResponse)->responseApi(true,$GLOBALS['PATCH_CATEGORY_DATA']);
         }else{
           throw new \Exception("Request is not put.", 1);
         }
       } catch (\Exception $e) {
         $this->getResponse()->setStatusCode(500);
-        $viewModel->setVariable('success', false);
-        $viewModel->setVariable('error', $e->getMessage());
-        return $viewModel;
+        return (new UtilResponse)->responseApi(false,$e->getMessage());
       }
     }
 
