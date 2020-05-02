@@ -22,8 +22,48 @@ return [
                 'options' => [
                     'route'    => '/',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\ApiController::class,
                         'action'     => 'index',
+                    ],
+                ],
+            ],
+            'add' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/add',
+                    'defaults' => [
+                        'controller' => Controller\ApiController::class,
+                        'action'     => 'addCategory',
+                    ],
+                ],
+            ],
+            'listAll' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/list-all',
+                    'defaults' => [
+                        'controller' => Controller\ApiController::class,
+                        'action'     => 'listCategory',
+                    ],
+                ],
+            ],
+            'list' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/list/:id',
+                    'defaults' => [
+                        'controller' => Controller\ApiController::class,
+                        'action'     => 'listCategoryById',
+                    ],
+                ],
+            ],
+            'update' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/update',
+                    'defaults' => [
+                        'controller' => Controller\ApiController::class,
+                        'action'     => 'updateCategory',
                     ],
                 ],
             ],
@@ -42,6 +82,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\ApiController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [
@@ -54,10 +95,14 @@ return [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
+            'error/505'               => __DIR__ . '/../view/error/505.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
+        ],
+        'strategies' => [
+            'ViewJsonStrategy',
         ],
     ],
 ];
