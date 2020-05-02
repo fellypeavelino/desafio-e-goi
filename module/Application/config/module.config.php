@@ -67,7 +67,17 @@ return [
                     ],
                 ],
             ],
-            'application' => [
+            'delete' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/delete',
+                    'defaults' => [
+                        'controller' => Controller\ApiController::class,
+                        'action'     => 'deleteCategory',
+                    ],
+                ],
+            ],
+            /*'application' => [
                 'type'    => Segment::class,
                 'options' => [
                     'route'    => '/application[/:action]',
@@ -76,7 +86,7 @@ return [
                         'action'     => 'index',
                     ],
                 ],
-            ],
+            ],*/
         ],
     ],
     'controllers' => [

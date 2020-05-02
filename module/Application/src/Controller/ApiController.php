@@ -20,7 +20,8 @@ class ApiController extends AbstractActionController
     }
 
     public function indexAction()
-    {/*
+    {
+      /*
       let data = new FormData();
       //data.append("id",0);
       data.append("category_id",0);
@@ -130,6 +131,37 @@ class ApiController extends AbstractActionController
           return (new UtilResponse)->responseApi(true,$GLOBALS['PATCH_CATEGORY_DATA']);
         }else{
           throw new \Exception("Request is not put.", 1);
+        }
+      } catch (\Exception $e) {
+        $this->getResponse()->setStatusCode(500);
+        return (new UtilResponse)->responseApi(false,$e->getMessage());
+      }
+    }
+
+
+    public function deleteCategoryAction()
+    {
+      try {
+        $utilData = new UtilData();
+        $list = $utilData->getData();
+        $request = $this->getRequest();
+        if ($request->getMethod() == "DELETE") {
+          $content = $this->getRequest()->getContent();
+          $data  = json_decode($content, true);
+          if (isset($data["id"])) {
+            $listFilter = [];
+            foreach ($list as $key => $obj) {
+              if ($obj->id != $data["id"]) {
+                array_push($listFilter,$obj);
+              }
+            }
+            $utilData->setData($listFilter);
+            return (new UtilResponse)->responseApi(true,"Categoria removida.");
+          }else{
+            throw new \Exception("Não há id.", 1);
+          }
+        }else{
+          throw new \Exception("Request is not delete.", 1);
         }
       } catch (\Exception $e) {
         $this->getResponse()->setStatusCode(500);

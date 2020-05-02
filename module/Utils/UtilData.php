@@ -17,7 +17,7 @@ class UtilData
 
   public function setData(array $list)
   {
-    $data = json_encode($list);
+    $data = json_encode($list, true);
     file_put_contents(__DIR__."/data/categories.json", $data);
   }
 
@@ -28,7 +28,7 @@ class UtilData
       foreach ($data as $key => $value) {
         $category[$key] = $value;
       }
-      return $category = (object) $category;      
+      return $category = (object) $category;
     } catch (\Exception $e) {
       throw new \Exception($e->getMessage());
     }
