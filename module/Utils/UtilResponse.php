@@ -22,4 +22,11 @@ class UtilResponse
       }
       return $viewModel;
     }
+
+    public function responseToken()
+    {
+      $result = ["msg"=>"token invalido"];
+      echo \Laminas\Json\Json::encode($result);
+      die;
+    }
 }

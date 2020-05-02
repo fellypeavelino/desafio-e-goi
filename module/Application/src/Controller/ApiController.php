@@ -17,16 +17,7 @@ class ApiController extends AbstractActionController
     public function __construct()
     {
       $this->auth = $this->getRequest()->getHeaders("Authorization", null);
-      if ($this->auth == null) {
-        //$this->getResponse()->setRedirect('error-authorization');
-      }
     }
-
-    // public function errorAuthorizationAction()
-    // {
-    //   $this->getResponse()->setStatusCode(500);
-    //   return (new UtilResponse)->responseApi(false,"Token não informado!");
-    // }
 
     public function indexAction()
     {
