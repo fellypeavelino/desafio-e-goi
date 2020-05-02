@@ -11,6 +11,12 @@ use \Util\UtilData as UtilData;
 
 class ApiController extends AbstractActionController
 {
+
+    public function __construct()
+    {
+      $auth = $this->getRequest()->getHeaders("Authorization", null);
+    }
+
     public function indexAction()
     {/*
       let data = new FormData();
