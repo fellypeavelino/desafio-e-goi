@@ -58,8 +58,9 @@ class ApiController extends AbstractActionController
             $data["created"]  = $request->getPost("created", date('Y-m-d\TH:i:s.u'));
             $data["modified"] = $request->getPost("modified", date('Y-m-d\TH:i:s.u'));
           }
+          $id = end ($list) ? (end ($list))->id : count($list);
           $category = new CategoryTable(
-            (count($list)+1), $data["category_id"],
+            ($id+1), $data["category_id"],
             $data["name"], $data["created"],
             $data["modified"]
           );
@@ -163,6 +164,35 @@ class ApiController extends AbstractActionController
         }else{
           throw new \Exception("Request is not delete.", 1);
         }
+      } catch (\Exception $e) {
+        $this->getResponse()->setStatusCode(500);
+        return (new UtilResponse)->responseApi(false,$e->getMessage());
+      }
+    }
+
+    public function outputAction()
+    {
+      try {
+        $id = $this->params()->fromRoute('id', 0);
+        $list = (new UtilData())->getData();
+        $result = new \stdClass;
+
+        foreach ($list as $key => $obj) {
+          if ($obj->id == $id) {
+            unset($obj->category_id);
+            $result = $obj;
+          }
+        }
+
+        $result->subcategorias = [];
+        foreach ($list as $key => $obj) {
+          if ($obj->category_id == $result->id) {
+            unset($obj->category_id);
+            array_push($result->subcategorias, $obj);
+          }
+        }
+
+        return (new UtilResponse)->responseApi(true,$result);
       } catch (\Exception $e) {
         $this->getResponse()->setStatusCode(500);
         return (new UtilResponse)->responseApi(false,$e->getMessage());

@@ -77,6 +77,16 @@ return [
                     ],
                 ],
             ],
+            'output' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/output/:id',
+                    'defaults' => [
+                        'controller' => Controller\ApiController::class,
+                        'action'     => 'output',
+                    ],
+                ],
+            ],
             'delete' => [
                 'type'    => Literal::class,
                 'options' => [

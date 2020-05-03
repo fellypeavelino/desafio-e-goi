@@ -28,6 +28,7 @@ class UtilData
       foreach ($data as $key => $value) {
         $category[$key] = $value;
       }
+      $category["modified"] = date('Y-m-d\TH:i:s.u');
       return $category = (object) $category;
     } catch (\Exception $e) {
       throw new \Exception($e->getMessage());
