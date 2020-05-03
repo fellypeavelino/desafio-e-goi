@@ -199,4 +199,31 @@ class ApiController extends AbstractActionController
       }
     }
 
+    public function outputAllAction()
+    {
+      try {
+        $id = $this->params()->fromRoute('id', 0);
+        $list = (new UtilData())->getData();
+        $newList = [];
+        foreach ($list as $key => $obj) {
+          unset($obj->category_id);
+          $result = $obj;
+          $result->subcategorias = [];
+          foreach ($list as $k => $o) {
+            if ($o->category_id == $result->id) {
+              unset($o->category_id);
+              array_push($result->subcategorias, $o);
+            }
+          }
+          array_push($newList, $result);
+        }
+
+
+        return (new UtilResponse)->responseApi(true,$newList);
+      } catch (\Exception $e) {
+        $this->getResponse()->setStatusCode(500);
+        return (new UtilResponse)->responseApi(false,$e->getMessage());
+      }
+    }
+
 }

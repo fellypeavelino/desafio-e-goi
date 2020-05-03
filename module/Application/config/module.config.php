@@ -87,6 +87,16 @@ return [
                     ],
                 ],
             ],
+            'output-all' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/output-all',
+                    'defaults' => [
+                        'controller' => Controller\ApiController::class,
+                        'action'     => 'outputAll',
+                    ],
+                ],
+            ],
             'delete' => [
                 'type'    => Literal::class,
                 'options' => [
