@@ -37,6 +37,16 @@ return [
                     ],
                 ],
             ],
+            'input' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/input',
+                    'defaults' => [
+                        'controller' => Controller\ApiController::class,
+                        'action'     => 'addCategory',
+                    ],
+                ],
+            ],
             'listAll' => [
                 'type'    => Literal::class,
                 'options' => [

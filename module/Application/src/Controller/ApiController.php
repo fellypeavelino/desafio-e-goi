@@ -32,7 +32,7 @@ class ApiController extends AbstractActionController
           method: 'POST',
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
             'Authorization': 'e-goi',
           },
           //body: JSON.stringify({id: 1, category_id: 0, name:"poliana","modified":(new Date).toISOString()})
@@ -51,11 +51,12 @@ class ApiController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
           $data = $request->getPost();
-          $data["created"]  = $request->getPost("created", date('Y-m-d\TH:i:s.u'));
-          $data["modified"] = $request->getPost("modified", date('Y-m-d\TH:i:s.u'));
           if (count($data) == 0) {
             $content = $this->getRequest()->getContent();
             $data    = json_decode($content, true);
+          }else {
+            $data["created"]  = $request->getPost("created", date('Y-m-d\TH:i:s.u'));
+            $data["modified"] = $request->getPost("modified", date('Y-m-d\TH:i:s.u'));
           }
           $category = new CategoryTable(
             (count($list)+1), $data["category_id"],
