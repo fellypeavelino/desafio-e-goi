@@ -31,8 +31,9 @@ class ApiController extends AbstractActionController
       fetch('/add', {
           method: 'POST',
           headers: {
-            //'Accept': 'application/json',
-            //'Content-Type': 'application/json'
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            'Authorization': 'e-goi',
           },
           //body: JSON.stringify({id: 1, category_id: 0, name:"poliana","modified":(new Date).toISOString()})
           body: data

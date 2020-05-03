@@ -24,8 +24,12 @@ class Module
 
     public function onBootstrap(Event $e)
     {
-        $auth = $e->getRequest()->getHeaders("Authorization", null);
-        if ($auth != "e-goi") {
+        $auth = (array) $e->getRequest()->getHeaders("Authorization", null);
+        $val = "";
+        foreach ($auth as $key => $value) {
+          $val = $value;
+        }
+        if ($val != "e-goi") {
           $e->getResponse()->setStatusCode(500);
           (new UtilResponse)->responseToken();
         }

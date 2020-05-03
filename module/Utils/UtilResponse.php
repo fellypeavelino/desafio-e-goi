@@ -25,6 +25,7 @@ class UtilResponse
 
     public function responseToken()
     {
+      http_response_code(500);
       $result = ["msg"=>"token invalido"];
       echo \Laminas\Json\Json::encode($result);
       die;
